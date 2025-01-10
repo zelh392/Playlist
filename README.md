@@ -64,21 +64,4 @@ El sistema está dividido en dos tipos de usuarios:
 - **Autenticación**: Laravel Breeze (Autenticación de usuarios)
 - **Archivos**: MP3 para las canciones
 
----
 
-## Instalación
-
-Sigue estos pasos para configurar el proyecto localmente:
-
-### Requisitos Previos
-
-- PHP >= 7.4
-- Composer
-- MySQL
-- Node.js (si deseas ejecutar el frontend)
-
-### Paso 1: Clonar el Repositorio
-
-```bash
-git clone https://github.com/tuusuario/playlist-app.git
-cd playlist-app
