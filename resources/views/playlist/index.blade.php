@@ -51,9 +51,7 @@
                 <div>
                     <a href="{{ route('playlist.show', $favoritePlaylist->id) }}">{{ $favoritePlaylist->title }}</a>
                     <span> || </span>
-                    <a href="{{ route('playlist.edit', $favoritePlaylist->id ) }}">Editar</a>
-                    <span> || </span>
-                    <form action="{{ route('playlist.destroy', $favoritePlaylist->id) }}" method="post" style="display:inline;">
+                    <form action="{{ route('playlist.deleteFavorite', $favoritePlaylist->id) }}" method="post" style="display:inline;">
                         @csrf
                         @method('delete')
                         <input type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar esta playlist de tus favoritos?')">

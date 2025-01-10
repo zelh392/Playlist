@@ -54,7 +54,8 @@ class PlaylistController extends Controller
         $playlist->load('songs');
         $totalSongs = $playlist->songs()->count();
         $totalDuration = $playlist->songs()->sum('duration');
-        return view('playlist.show', compact('playlist', 'totalSongs', 'totalDuration'));
+        $user = Auth::user();
+        return view('playlist.show', compact('playlist', 'totalSongs', 'totalDuration', 'user'));
     }
 
     /**
@@ -120,6 +121,21 @@ class PlaylistController extends Controller
 
         $playlist->favoritedByUser()->attach(Auth::user()->id);
         return redirect()->route('playlist.index')->with('success', 'Playlist añadida a tus favoritos.');
+    }
+
+    public function deleteFavorite(Request $request, $playlist_id)
+    {
+        // dd($playlist_id);
+        $playlist = Playlist::findOrFail($playlist_id);
+        $playlist->favoritedByUser()->detach(Auth::user()->id);
+        return redirect()->route('playlist.index')->with('success', 'Playlist borrada de tus favoritos.');
+    }
+
+    public function searchPlaylist(Request $request)
+    {
+        $allPlaylists = Playlist::where('title', 'like', "%{$request->title}%")
+        ->where('user_id', '!=', Auth::user()->id)->get();
+        return view('playlist.allPlaylists', compact('allPlaylists'));
     }
       
 

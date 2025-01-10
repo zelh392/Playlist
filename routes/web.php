@@ -30,13 +30,27 @@ Route::get('/playlist/{playlist}/edit', [PlaylistController::class, 'edit'])->na
 Route::put('/playlist/{playlist}', [PlaylistController::class, 'update'])->name('playlist.update');
 Route::delete('/playlist/{playlist}', [PlaylistController::class, 'destroy'])->name('playlist.destroy');
 
+Route::post('/playlist/search', [PlaylistController::class, 'searchPlaylist'])->name('playlist.search');
+Route::delete('/playlist/deleteFavorite/{playlist}', [PlaylistController::class, 'deleteFavorite'])->name("playlist.deleteFavorite");
 
 
-Route::resource('/song', SongController::class);
 Route::post('/playlist/{song}/addToPlaylist', [PlaylistController::class, 'addToPlaylist'])->name('song.addToPlaylist');
 Route::get('/allPlaylists', [PlaylistController::class, 'allPlaylists'])->name('playlist.allPlaylists');
 
 Route::post('/addFavorite', [PlaylistController::class, 'addFavorite'])->name('playlist.addFavorite');
+
+// Route::resource('/song', SongController::class);
+Route::get('/song', [SongController::class, 'index'])->name('song.index');
+Route::get('/song/create', [SongController::class, 'create'])->name('song.create');
+Route::post('/song', [SongController::class, 'store'])->name('song.store');
+Route::get('/song/{song}', [SongController::class, 'show'])->name('song.show');
+Route::get('/song/{song}/edit', [SongController::class, 'edit'])->name('song.edit');
+Route::put('/song/{song}', [SongController::class, 'update'])->name('song.update');
+Route::delete('/song/{song}', [SongController::class, 'destroy'])->name('song.destroy');
+
+Route::post('/song/search', [SongController::class, 'searchSong'])->name('song.search');
+
+
 
 
 // REVISAR EL PROYECTO Y POSIBLE ERROR EN LAS VALIDACIONES REPASAR

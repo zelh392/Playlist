@@ -9,6 +9,9 @@
     <h3>Número de canciones: {{ $totalSongs }} canción(es)</h3>
     <h3>Duración {{ gmdate("i:s", $totalDuration) }} </h3>
 
+    @if($playlist->user_id === $user->id)
+        <a href="{{ route('playlist.edit', $playlist->id ) }}">Editar Playlist</a>
+    @endif
     
     @if ($playlist->songs->isEmpty())
         <p>No hay canciones en esta playlist. ¡Añade algunas para disfrutar de tu música!</p>

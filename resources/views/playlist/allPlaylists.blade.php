@@ -14,6 +14,14 @@
 
     <h1>Explora todas las Playlists</h1>
 
+    <div>
+        <form action="{{ route('playlist.search') }}" method="post">
+            @csrf
+            <input type="text" name="title" placeholder="Buscar por Nombre">
+            <input type="submit" value="Buscar">
+        </form>
+    </div>
+
     <h2>Lista de Playlists</h2>
     
     <ul>

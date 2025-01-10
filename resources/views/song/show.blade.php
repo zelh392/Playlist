@@ -7,5 +7,6 @@
     <h1>{{ $song->title }}</h1>
     <h3>Autor: {{ $song->author }}</h3>
     <h3>Duración: {{ gmdate('i:s', $song->duration) }}</h3>
+    <audio controls src="{{ asset('storage/songs/'. $song->path_song) }}"></audio>
 
 @endsection

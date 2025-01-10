@@ -12,8 +12,19 @@
     
 
     <a href="{{ route('playlist.index') }}">← Volver al inicio</a>
+
+    
     
     <h1>Todas las canciones</h1>
+
+    <div>
+        <form action="{{ route('song.search') }}" method="post">
+            @csrf
+            <input type="text" name="title" placeholder="Buscar por Nombre">
+            <input type="text" name="author" placeholder="Buscar por Autor">
+            <input type="submit" value="Buscar">
+        </form>
+    </div><br>
 
     <div>
         <a href="{{ route('song.create') }}">Añadir una nueva canción</a>
@@ -25,9 +36,14 @@
 
     @forelse($songs as $song)
         <div>
-            {{-- @dd($song->path_song) --}}
-            <a href="{{ route('song.show', $song->id) }}">{{ $song->title }}</a>
-            <audio controls src="{{ asset('storage/songs/'. $song->path_song) }}"></audio>
+            <h3><a href="{{ route('song.show', $song->id) }}">{{ $song->title }}</a></h3>
+            <audio controls src="{{ asset('storage/songs/'. $song->path_song) }}"></audio><br>
+            <a href="{{ route('song.edit', $song->id ) }}">Editar</a>
+            <form action="{{ route('song.destroy', $song->id) }}" method="post" style="display:inline;">
+                @csrf
+                @method('delete')
+                <input type="submit" value="Eliminar" onclick="return confirm('¿Estás seguro de que deseas eliminar esta playlist?')">
+            </form><br><br>
         </div>
         
         <div>
