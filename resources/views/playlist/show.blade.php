@@ -12,20 +12,19 @@
     @if($playlist->user_id === $user->id)
         <a href="{{ route('playlist.edit', $playlist->id ) }}">Editar Playlist</a>
     @endif
-    
-    @if ($playlist->songs->isEmpty())
-        <p>No hay canciones en esta playlist. ¡Añade algunas para disfrutar de tu música!</p>
-    @else
-        <h4>Lista de canciones:</h4>
-        <ul>
-            @foreach ($playlist->songs as $song)
-                <li>
-                    <strong>{{ $song->title }}</strong> - {{ $song->author }} 
-                    ({{ gmdate('i:s', $song->duration) }})
-                    <audio controls src="{{ asset('storage/songs/'. $song->path_song) }}"></audio>
-                </li>
-            @endforeach
-        </ul>
-    @endif
+
+    <h4>Lista de canciones:</h4>
+
+    <ul>
+        @forelse($playlist->songs as $song)
+            <li>
+                <strong>{{ $song->title }}</strong> - {{ $song->author }} 
+                ({{ gmdate('i:s', $song->duration) }})
+                <audio controls src="{{ asset('storage/songs/'. $song->path_song) }}"></audio>
+            </li>
+        @empty
+            <p>No hay canciones en esta playlist. ¡Añade algunas para disfrutar de tu música!</p>
+        @endforelse
+    </ul>
 
 @endsection

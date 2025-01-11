@@ -7,6 +7,7 @@ use App\Models\Playlist;
 use App\Models\Song;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class SongController extends Controller
 {
@@ -15,9 +16,10 @@ class SongController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $playlists = Playlist::where('user_id', Auth::user()->id)->get();
         $songs = Song::all();
-        return view('song.index', compact('songs', 'playlists'));
+        return view('song.index', compact('songs', 'playlists', 'user'));
     }
 
     /**
@@ -44,7 +46,7 @@ class SongController extends Controller
             'user_id' => Auth::user()->id,
         ]);
         
-        return redirect()->route('song.index')->with("succes", "Song Created");
+        return redirect()->route('song.index')->with("success", "Song Created");
     }
 
     /**
@@ -52,7 +54,8 @@ class SongController extends Controller
      */
     public function show(Song $song)
     {
-        return view('song.show', compact('song'));
+        $user = Auth::user();
+        return view('song.show', compact('song', 'user'));
     }
 
     /**
@@ -68,7 +71,7 @@ class SongController extends Controller
      */
     public function update(SongRequest $request, Song $song)
     {
-        // dd($request->path_song->extension());
+        $oldPathSong = $song->path_song;
         $fileName = time().'.'.$request->path_song->extension();
         $request->file('path_song')->storeAs('songs', $fileName, 'public');
 
@@ -79,7 +82,9 @@ class SongController extends Controller
             'path_song' => $fileName,
             'user_id' => Auth::user()->id,
         ]);
-        return redirect()->route('song.index')->with("succes", "Song Updated");
+
+        Storage::disk('public')->delete('songs/'. $oldPathSong);
+        return redirect()->route('song.index')->with("success", "Song Updated");
     }
 
     /**
@@ -87,8 +92,10 @@ class SongController extends Controller
      */
     public function destroy(Song $song)
     {
+        $oldPathSong = $song->path_song;
         $song->delete($song->id);
-        return redirect()->route('song.index')->with("succes", "Song Deleted");
+        Storage::disk('public')->delete('songs/'. $oldPathSong);
+        return redirect()->route('song.index')->with("success", "Song Deleted");
     }
 
     public function searchSong(Request $request)
@@ -100,5 +107,4 @@ class SongController extends Controller
         return view('song.index', compact('songs', 'playlists'));        
     }
 
-    
 }

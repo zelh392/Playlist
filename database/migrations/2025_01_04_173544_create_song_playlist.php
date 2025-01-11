@@ -17,6 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('song_id');
             $table->timestamps();
 
+            $table->foreign('playlist_id')->references('id')->on('playlists')->onDelete('cascade');
+            $table->foreign('song_id')->references('id')->on('songs')->onDelete('cascade');
+
             $table->unique(["playlist_id", "song_id"]);
         });
     }

@@ -3,11 +3,11 @@
 @section('content')
 
     @if($errors->any())
-    <ul>
-        @foreach($errors->all() as $error)
-            <li style="color: red">{{ $error }}</li>
-        @endforeach
-    </ul>
+        <ul>
+            @foreach($errors->all() as $error)
+                <li style="color: red">{{ $error }}</li>
+            @endforeach
+        </ul>
     @endif
 
     <a href="{{ route('playlist.index') }}">← Volver al inicio</a><br><br>
@@ -27,7 +27,7 @@
     <ul>
         @forelse($allPlaylists as $allPlaylist)
             <li>
-                <strong>{{ $allPlaylist->title }}</strong>
+                <a href="{{ route('playlist.show', $allPlaylist->id) }}">{{ $allPlaylist->title }}</a>
                 
                 <form action="{{ route('playlist.addFavorite') }}" method="post" style="display:inline;">
                     @csrf

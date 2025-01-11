@@ -21,8 +21,7 @@ class PlaylistController extends Controller
             $favoritePlaylists = $user->favoritePlaylists;
             return view('playlist.index', compact('playlists', 'favoritePlaylists'));
         }else{
-            $allPlaylists = Playlist::limit(4)->get();
-            return view('playlist.index', compact('allPlaylists'));
+            return view('playlist.index');
         }
     }
 
@@ -43,7 +42,7 @@ class PlaylistController extends Controller
             "title" => $request->title,
             "user_id" => Auth::user()->id,
         ]);
-        return redirect()->route('playlist.index')->with("succes", "PlayList Created");
+        return redirect()->route('playlist.index')->with("success", "PlayList Created");
     }
 
     /**
@@ -72,7 +71,7 @@ class PlaylistController extends Controller
     public function update(PlaylistRequest $request, Playlist $playlist)
     {
         $playlist->update($request->all());
-        return redirect()->route('playlist.index')->with("succes", "PlayList Updated");
+        return redirect()->route('playlist.index')->with("success", "PlayList Updated");
     }
 
     /**
@@ -93,7 +92,7 @@ class PlaylistController extends Controller
             return redirect()->route('song.index')->with("danger", "Song Exists");
         }
         $playlist->songs()->attach($request->song);
-        return redirect()->route('song.index')->with("succes", "Song Added Correctly");
+        return redirect()->route('song.index')->with("success", "Song Added Correctly");
     }
 
     public function allPlaylists()
@@ -101,14 +100,6 @@ class PlaylistController extends Controller
         $allPlaylists = Playlist::where('user_id', '!=', Auth::user()->id)->get();
         return view('playlist.allPlaylists', compact('allPlaylists'));
     }
-
-    // public function addFavorite(Request $request)
-    // {
-
-    //     $playlist = Playlist::find($request->playlist_id);
-    //     $playlist->favoritedByUser()->attach(Auth::user()->id);
-    //     return redirect()->route('playlist.index')->with('success', 'Playlist añadida a tus favoritos.');
-    // }
 
     public function addFavorite(Request $request)
     {
@@ -125,7 +116,6 @@ class PlaylistController extends Controller
 
     public function deleteFavorite(Request $request, $playlist_id)
     {
-        // dd($playlist_id);
         $playlist = Playlist::findOrFail($playlist_id);
         $playlist->favoritedByUser()->detach(Auth::user()->id);
         return redirect()->route('playlist.index')->with('success', 'Playlist borrada de tus favoritos.');
@@ -138,6 +128,4 @@ class PlaylistController extends Controller
         return view('playlist.allPlaylists', compact('allPlaylists'));
     }
       
-
-
 }

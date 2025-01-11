@@ -1,6 +1,6 @@
 
 
-@if($message = Session::get('succes'))
+@if($message = Session::get('success'))
     <dir style="padding: 5px; background-color:green; color:white">
         <p>{{ $message }}</p>
     </dir>
