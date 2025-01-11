@@ -4,7 +4,6 @@
 
 @section('content')
 
-<h1 style="color: red; background-color:yellow">PROBAR EL PROYECTO HACER TEST Y COMPROBAR SU FUNCIONAMIENTO CORRECTO, eliminar de storage cuando borre</h1>
     @auth
         <div>
             <form action="{{ route('logout') }}" method="post">
