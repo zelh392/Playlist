@@ -48,7 +48,7 @@
             </div>
             
             <div>
-                <form action="{{ route('song.addToPlaylist', $song->id) }}" method="POST">
+                <form action="{{ route('playlist.addToPlaylist', $song->id) }}" method="POST">
                     @csrf
                     <label for="playlists">Añadir a la Playlist:</label>
                     <select name="playlists" id="playlists">
@@ -76,7 +76,7 @@
             </div>
             
             <div>
-                <form action="{{ route('song.addToPlaylist', $song->id) }}" method="POST">
+                <form action="{{ route('playlist.addToPlaylist', $song->id) }}" method="POST">
                     @csrf
                     <label for="playlists">Añadir a la Playlist:</label>
                     <select name="playlists" id="playlists">

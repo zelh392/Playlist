@@ -101,7 +101,7 @@ class PlaylistController extends Controller
         return view('playlist.allPlaylists', compact('allPlaylists'));
     }
 
-    public function addFavorite(Request $request)
+    public function addFavoritePlaylist(Request $request)
     {
         $playlist = Playlist::findOrFail($request->playlist_id);
         $exists = $playlist->favoritedByUser()->where('user_id', Auth::user()->id)->exists();
